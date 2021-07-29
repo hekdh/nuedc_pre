@@ -8,7 +8,7 @@
 #include "Ano_MotorCtrl.h"
 #include "Ano_AttCtrl.h"
 #include "Ano_LocCtrl.h"
-
+#include "Ano_ProgramCtrl_User.h"
 static s16 auto_taking_off_speed;
 
 #define AUTO_TAKE_OFF_KP 2.0f
@@ -208,5 +208,54 @@ void Alt_1level_Ctrl(float dT_s)
 	loc_ctrl_1.out[Z] = LIMIT(loc_ctrl_1.out[Z],0,MAX_THR_SET *10);	
 	
 	mc.ct_val_thr = loc_ctrl_1.out[Z];
+}
+//高度保持	wcz_hei_fus.out
+void alt_hold(float alt_data,float ep_alt)
+{
+	if((flag.auto_take_off_land == AUTO_TAKE_OFF_FINISH)&&(flag.auto_take_off_land != AUTO_LAND))
+	{
+		if((alt_data>=(ep_alt+3))||(alt_data<=(ep_alt-3)))
+		{
+		float ep_alt_temp;
+
+		ep_alt_temp= alt_hold_pid(ep_alt,alt_data);		
+		ep_alt_temp=LIMIT( ep_alt_temp,-25,25);//速度限制25cm/s
+		Program_Ctrl_User_Set_Zcmps(ep_alt_temp);
+			
+		}	
+	}
+
+}
+
+float alt_hold_pid(float ep_distance,float distance)
+{
+
+	float pox_pid,pox_pid_p=0,pox_pid_i=0,pox_pid_d=0;
+	static	float ep_pox_old=0,opmv_pox_old=0;
+	float pid_setalt,pid_actualalt;
+	pid_setalt=ep_distance;
+	pid_actualalt=distance;
+	
+	if((pid_setalt-pid_actualalt)>0)
+	{
+		pox_pid_p=(pid_setalt-pid_actualalt);
+		pox_pid_i+=0.02f*pox_pid_p;
+		pox_pid_d=(ep_pox_old-opmv_pox_old)-(pid_setalt-pox_pid_p);
+		pox_pid_i=LIMIT( pox_pid_i,0,5);//i限制
+		pox_pid=0.8f*pox_pid_p+pox_pid_i+0.05f*pox_pid_d;//p系数为0.8，i系数为0.02，d系数为0.05
+	}
+	else 
+	{
+		pox_pid_p=(pid_setalt-pid_actualalt);
+		pox_pid_i+=0.02f*pox_pid_p;
+		pox_pid_d=(ep_pox_old-opmv_pox_old)-(pid_setalt-pox_pid_p);
+		if((-pox_pid_i)>5) pox_pid_i=-5;//i限制
+		pox_pid=0.8f*pox_pid_p+pox_pid_i+0.05f*pox_pid_d;//p系数为0.8，i系数为0.02，d系数为0.05
+	}	
+	
+	ep_pox_old=pid_setalt;
+	opmv_pox_old=pid_actualalt;
+	
+	return pox_pid;
 }
 

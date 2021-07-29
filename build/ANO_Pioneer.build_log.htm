@@ -27,19 +27,36 @@ Project File Date:  07/28/2021
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 3 (build 300)', folder: 'D:\mdk5\ARM\ARMCC\Bin'
 Build target 'Ano_Pioneer'
+compiling Ano_Scheduler.c...
+compiling Ano_AltCtrl.c...
+SRC\fc_specific\Ano_AltCtrl.c(223): warning:  #223-D: function "Program_Ctrl_User_Set_Zcmps" declared implicitly
+  		Program_Ctrl_User_Set_Zcmps(ep_alt_temp);
+SRC\fc_specific\Ano_AltCtrl.c(242): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  		pox_pid_i+=0.02*pox_pid_p;
+SRC\fc_specific\Ano_AltCtrl.c(245): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  		pox_pid=0.8*pox_pid_p+pox_pid_i+0.05*pox_pid_d;//p系??为0.8，i系??为0.02，d系??为0.05
+SRC\fc_specific\Ano_AltCtrl.c(245): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  		pox_pid=0.8*pox_pid_p+pox_pid_i+0.05*pox_pid_d;//p系??为0.8，i系??为0.02，d系??为0.05
+SRC\fc_specific\Ano_AltCtrl.c(250): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  		pox_pid_i+=0.02*pox_pid_p;
+SRC\fc_specific\Ano_AltCtrl.c(253): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  		pox_pid=0.8*pox_pid_p+pox_pid_i+0.05*pox_pid_d;//p系??为0.8，i系??为0.02，d系??为0.05
+SRC\fc_specific\Ano_AltCtrl.c(253): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  		pox_pid=0.8*pox_pid_p+pox_pid_i+0.05*pox_pid_d;//p系??为0.8，i系??为0.02，d系??为0.05
+SRC\fc_specific\Ano_AltCtrl.c: 7 warnings, 0 errors
 compiling Ano_FlightCtrl.c...
 linking...
-Program Size: Code=106220 RO-data=2316 RW-data=1248 ZI-data=13832  
+Program Size: Code=106992 RO-data=2316 RW-data=1256 ZI-data=13832  
 FromELF: creating hex file...
 After Build - User command #1: fromelf.exe --bin -o ./AnoPioneerPro.bin ./build/Ano_Pioneer.axf
-".\build\ANO_Pioneer.axf" - 0 Error(s), 0 Warning(s).
+".\build\ANO_Pioneer.axf" - 0 Error(s), 7 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
   D:\四旋翼\匿名拓空者P2资料包-20210714\8：飞控源码工程\ANO_PioneerPro-088\RTE
   D:\mdk5\ARM\PACK\Keil\STM32F4xx_DFP\2.2.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>
