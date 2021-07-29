@@ -590,6 +590,13 @@ void Flight_Mode_Set(u8 dT_ms)
 	{
 		flag.flight_mode2 = 0;
 	}
-		
+	if(CH_N[AUX3]>0)
+	{
+		one_key_take_off();
+	}
+	if(CH_N[AUX4]>0)
+	{
+		one_key_land();
+	}
 }
 
