@@ -148,7 +148,10 @@ typedef struct
 
 	u8 rc_loss_back_home;
 	u8 gps_ok;	
-
+	
+	u8 offline;
+	u16 distance;
+	
 	
 	//¿ØÖÆ×´Ì¬
 	u8 manual_locked;

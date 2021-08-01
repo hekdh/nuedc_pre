@@ -739,6 +739,16 @@
               <FileType>5</FileType>
               <FilePath>.\SRC\drivers\Drv_RcIn.h</FilePath>
             </File>
+            <File>
+              <FileName>Drv_ultrasonic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SRC\drivers\Drv_ultrasonic.c</FilePath>
+            </File>
+            <File>
+              <FileName>Drv_ultrasonic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\SRC\drivers\Drv_ultrasonic.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

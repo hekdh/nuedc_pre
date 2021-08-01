@@ -21,6 +21,9 @@ void Alt_2level_PID_Init(void);
 void Alt_2level_Ctrl(float dT_s);
 
 void Auto_Take_Off_Land_Task(u8 dT_ms);
-#endif
-void alt_hold(float alt_data,float ep_alt);
+
+
 float alt_hold_pid(float ep_distance,float distance);
+void alt_hold(float alt_data,float ep_alt);
+
+#endif

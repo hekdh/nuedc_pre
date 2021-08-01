@@ -62,7 +62,8 @@ void Drv_Laser_GetOneByte(u8 data)
 			{
 				if(LASER_LINKOK == 2)
 					LASER_LINKOK = 1;
-				Laser_height_cm = (tmp[2] + ((u16)tmp[3]<<8));
+				flag.distance= (tmp[2] + ((u16)tmp[3]<<8));
+				
 			}
 			sta = 0;
 			cnt = 0;

@@ -49,3 +49,4 @@
 .\build\ano_altctrl.o: SRC\fc_specific\Ano_MotorCtrl.h
 .\build\ano_altctrl.o: SRC\fc_specific\Ano_AttCtrl.h
 .\build\ano_altctrl.o: SRC\fc_specific\Ano_LocCtrl.h
+.\build\ano_altctrl.o: .\SRC\applications\Ano_ProgramCtrl_User.h

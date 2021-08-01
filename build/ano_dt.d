@@ -50,3 +50,4 @@
 .\build\ano_dt.o: .\SRC\fc_specific\Ano_LocCtrl.h
 .\build\ano_dt.o: .\SRC\fc_general\Ano_Pid.h
 .\build\ano_dt.o: .\SRC\drivers\Drv_spl06.h
+.\build\ano_dt.o: SRC\applications\Ano_ProgramCtrl_User.h

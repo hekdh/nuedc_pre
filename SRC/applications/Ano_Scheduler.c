@@ -37,9 +37,18 @@
 #include "Ano_OF_DecoFusion.h"
 #include "Ano_Imu_Task.h"
 #include "Drv_BSP.h"
-
+#include "math.h"
+#include "Ano_FcData.h"
+#include "Ano_ProgramCtrl_User.h"
+#include "Ano_math.h"
+#include "Drv_ultrasonic.h"
+#include "Ano_MotionCal.h"
 u32 test_dT_1000hz[3],test_rT[6];
-
+unsigned char ult_commend[3]={0xD0,0x02,0xb4};//超声波发送命令
+static float time_flag=0;
+static u8 ult_send_re=1;
+extern u8 ult_can_send;
+extern u16 raw_distance;
 static void Loop_1000Hz(void)	//1ms执行一次
 {
 	test_dT_1000hz[0] = test_dT_1000hz[1];
@@ -113,7 +122,7 @@ static void Loop_100Hz(void)	//10ms执行一次
 	
 	/*飞行模式设置任务*/
 	Flight_Mode_Set(10);
-	//
+	
 	//
 	GPS_Data_Processing_Task(10);
 	
@@ -157,6 +166,23 @@ static void Loop_50Hz(void)	//20ms执行一次
 	ANO_LTracking_Task(20);
 	/*OPMV控制任务*/
 	ANO_OPMV_Ctrl_Task(20);
+	
+	/*高度保持，暂定50cm*/
+	alt_hold(wcz_hei_fus.out,80);
+	
+	/*超声波距离保持*/
+//	if((filter(raw_distance,0.05)>120)&&(filter(raw_distance,0.05)<450)) flag.distance=filter(raw_distance,0.05);
+	
+	if(flag.flight_mode2==2)
+	{
+		if(flag.distance<=150)
+		{
+			ult_distance_hold(100,flag.distance);
+		}
+		else
+			Program_Ctrl_User_Set_HXYcmps(0,0);
+	}
+
 }
 
 static void Loop_20Hz(void)	//50ms执行一次
@@ -165,6 +191,8 @@ static void Loop_20Hz(void)	//50ms执行一次
 	Power_UpdateTask(50);
 	//恒温控制
 	Thermostatic_Ctrl_Task(50);
+	
+
 }
 
 static void Loop_2Hz(void)	//500ms执行一次

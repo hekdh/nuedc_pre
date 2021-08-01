@@ -25,6 +25,7 @@
 #include "Ano_RC.h"
 #include "Ano_LocCtrl.h"
 #include "Drv_spl06.h"
+#include "Ano_ProgramCtrl_User.h"
 /*============================================================================
 ******************************************************************************
 ******************************************************************************
@@ -43,7 +44,7 @@
 #define DT_SENDPTR_U2	Uart5_Send
 
 //越往前发送优先级越高，如果需要修改，这里和h文件里的枚举需要同时改
-const u8  _cs_idlist[CSID_NUM]	 	= {0x20,0x21,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0f,0x30,0x32,0x33,0x34,0x40,0x41,0xFA};
+const u8  _cs_idlist[CSID_NUM]	 	= {0x20,0x21,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0f,0x30,0x32,0x33,0x34,0x40,0x41,0xF1};
 //循环发送数据结构体
 typedef struct
 {
@@ -183,6 +184,9 @@ void ANO_DT_Init(void)
 	dt.txSet_u2[CSID_X30].fre_ms = 200;//
 	//遥控数据
 	dt.txSet_u2[CSID_X40].fre_ms = 100;//
+	
+	//自定义数据
+	dt.txSet_u2[CSID_XF1].fre_ms = 50;
 //	//实时控制数据
 //	dt.txSet_u2[CSID_X41].fre_ms = 50;//
 //	//FC_RGB
@@ -420,9 +424,20 @@ static void DTFrameAddData(u8 frame_num,u8 *_cnt)
 
 		}
 		break;
-		case 0xfa:
+		case 0xF1:
 		{
-
+		if(flag.offline==0)
+		{
+		temp_data = (u16)(flag.distance);
+		CycleSendData[(*_cnt)++] = BYTE0(temp_data);
+		CycleSendData[(*_cnt)++] = BYTE1(temp_data);
+		}
+		
+		temp_data = (s16)(pc_user.vel_cmps_set_h[0]);
+		CycleSendData[(*_cnt)++] = BYTE0(temp_data);
+		CycleSendData[(*_cnt)++] = BYTE1(temp_data);
+		
+		
 		}
 		break;	
 		default :break;

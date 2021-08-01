@@ -40,7 +40,9 @@
 .\build\drv_usart.o: SRC\drivers\Drv_OpenMV.h
 .\build\drv_usart.o: SRC\drivers\Drv_laser.h
 .\build\drv_usart.o: SRC\drivers\Drv_UP_Flow.h
-.\build\drv_usart.o: .\SRC\applications\Ano_UWB.h
+.\build\drv_usart.o: SRC\drivers\Drv_ultrasonic.h
+.\build\drv_usart.o: .\SRC\fc_specific\Ano_FlightCtrl.h
 .\build\drv_usart.o: .\SRC\fc_general\Ano_Filter.h
 .\build\drv_usart.o: .\SRC\fc_general\Ano_Math.h
+.\build\drv_usart.o: .\SRC\applications\Ano_UWB.h
 .\build\drv_usart.o: .\SRC\fc_general\Ano_Imu.h

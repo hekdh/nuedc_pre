@@ -9,6 +9,8 @@
 #include "Ano_AttCtrl.h"
 #include "Ano_LocCtrl.h"
 #include "Ano_ProgramCtrl_User.h"
+#include "Ano_FcData.h"
+#include "Ano_Math.h"
 static s16 auto_taking_off_speed;
 
 #define AUTO_TAKE_OFF_KP 2.0f
@@ -209,6 +211,7 @@ void Alt_1level_Ctrl(float dT_s)
 	
 	mc.ct_val_thr = loc_ctrl_1.out[Z];
 }
+
 //高度保持	wcz_hei_fus.out
 void alt_hold(float alt_data,float ep_alt)
 {
@@ -239,18 +242,18 @@ float alt_hold_pid(float ep_distance,float distance)
 	if((pid_setalt-pid_actualalt)>0)
 	{
 		pox_pid_p=(pid_setalt-pid_actualalt);
-		pox_pid_i+=0.02f*pox_pid_p;
+		pox_pid_i+=0.02*pox_pid_p;
 		pox_pid_d=(ep_pox_old-opmv_pox_old)-(pid_setalt-pox_pid_p);
 		pox_pid_i=LIMIT( pox_pid_i,0,5);//i限制
-		pox_pid=0.8f*pox_pid_p+pox_pid_i+0.05f*pox_pid_d;//p系数为0.8，i系数为0.02，d系数为0.05
+		pox_pid=0.8*pox_pid_p+pox_pid_i+0.05*pox_pid_d;//p系数为0.8，i系数为0.02，d系数为0.05
 	}
 	else 
 	{
 		pox_pid_p=(pid_setalt-pid_actualalt);
-		pox_pid_i+=0.02f*pox_pid_p;
+		pox_pid_i+=0.02*pox_pid_p;
 		pox_pid_d=(ep_pox_old-opmv_pox_old)-(pid_setalt-pox_pid_p);
 		if((-pox_pid_i)>5) pox_pid_i=-5;//i限制
-		pox_pid=0.8f*pox_pid_p+pox_pid_i+0.05f*pox_pid_d;//p系数为0.8，i系数为0.02，d系数为0.05
+		pox_pid=0.8*pox_pid_p+pox_pid_i+0.05*pox_pid_d;//p系数为0.8，i系数为0.02，d系数为0.05
 	}	
 	
 	ep_pox_old=pid_setalt;
@@ -258,4 +261,3 @@ float alt_hold_pid(float ep_distance,float distance)
 	
 	return pox_pid;
 }
-

@@ -52,6 +52,7 @@
 ".\build\drv_bmi088.o"
 ".\build\drv_bsp.o"
 ".\build\drv_rcin.o"
+".\build\drv_ultrasonic.o"
 ".\build\misc.o"
 ".\build\stm32f4xx_adc.o"
 ".\build\stm32f4xx_dbgmcu.o"
